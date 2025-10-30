@@ -6,14 +6,10 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import shap
 
-# --------------------------
-# Streamlit Config
-# --------------------------
+
 st.set_page_config(page_title="IBM HR Analytics Dashboard", page_icon="💼", layout="wide")
 
-# --------------------------
-# Custom CSS Styling
-# --------------------------
+
 st.markdown("""
     <style>
         .main {
@@ -50,9 +46,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# --------------------------
-# Load Data & Model
-# --------------------------
+
 @st.cache_data
 def load_data():
     try:
@@ -85,16 +79,11 @@ df = load_data()
 model, feature_columns = load_model()
 
 
-# --------------------------
-# Header
-# --------------------------
 st.markdown("<h1 class='title'>💼 IBM HR Analytics Dashboard</h1>", unsafe_allow_html=True)
 st.markdown("<p class='subtitle'>Analyze, Predict & Understand Employee Attrition</p>", unsafe_allow_html=True)
 st.markdown("---")
 
-# --------------------------
-# KPIs Section
-# --------------------------
+
 col1, col2, col3, col4 = st.columns(4)
 
 total_employees = len(df)
@@ -129,9 +118,7 @@ with col4:
 
 st.markdown("---")
 
-# --------------------------
-# Tabs Layout
-# --------------------------
+
 tab1, tab2, tab3, tab4 = st.tabs([
     "📊 Insights Dashboard",
     "🔍 Correlation Heatmap",
@@ -139,9 +126,7 @@ tab1, tab2, tab3, tab4 = st.tabs([
     "🧠 Explainability (Feature Importance)"
 ])
 
-# ==========================
-# TAB 1 - Insights
-# ==========================
+
 with tab1:
     st.subheader("Employee Attrition Insights")
     t1a, t1b = st.columns(2)
@@ -170,9 +155,7 @@ with tab1:
         plt.xticks(rotation=45)
         st.pyplot(fig)
 
-# ==========================
-# TAB 2 - Correlation
-# ==========================
+
 with tab2:
     st.subheader("Correlation Heatmap")
     corr = df.select_dtypes(include=['int64', 'float64']).corr()
@@ -181,9 +164,7 @@ with tab2:
     plt.title("Feature Correlation Matrix")
     st.pyplot(fig)
 
-# ==========================
-# TAB 3 - Prediction
-# ==========================
+
 with tab3:
     st.subheader("🎯 Predict Employee Attrition")
     st.info("Enter details to predict whether the employee will stay or leave.")
@@ -224,9 +205,7 @@ with tab3:
         else:
             st.success("✅ Employee is **Likely to Stay** with the company.")
 
-# ==========================
-# TAB 4 - Explainability
-# ==========================
+
 with tab4:
     st.subheader("🧠 Feature Importance & SHAP Explainability")
 
@@ -253,8 +232,6 @@ with tab4:
     except Exception as e:
         st.warning(f"Explainability not available: {e}")
 
-# --------------------------
-# Footer
-# --------------------------
+
 st.markdown("---")
 st.markdown("<p style='text-align:center;color:gray;'>👩‍💻 Created by <b>Nanda S.C</b> | IBM HR Analytics Project | Data Science</p>", unsafe_allow_html=True)
